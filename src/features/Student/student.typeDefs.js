@@ -4,11 +4,11 @@ type Student {
     id: ID!
     name: String!
     email: String!
-    age:String!
+    age:Int!
     course:String!
     department:String!
     Year:String!
-    cgpa:String!
+    cgpa:Float!
 }
 
 type Query {

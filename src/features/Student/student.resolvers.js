@@ -1,3 +1,6 @@
+import Student from "./student.model.js";
+import {createStudentController} from "./student.controller.js"
+
 const StudentResolvers = {
     Query: {
         students: () => {
@@ -27,7 +30,7 @@ const StudentResolvers = {
 
     Mutation: {
         createStudent: (_, args) => {
-            console.log("args", args)
+            createStudentController(args)
 
         },
         updateStudent: (_, args) => {
