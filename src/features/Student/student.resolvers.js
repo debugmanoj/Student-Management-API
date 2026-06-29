@@ -1,26 +1,19 @@
 import Student from "./student.model.js";
-import {createStudentController} from "./student.controller.js"
+import { createStudentController,getAllStudents,getSingleStudent } from "./student.controller.js"
 
 const StudentResolvers = {
     Query: {
-        students: () => {
-            return [
-                {
-                    id: 1,
-                    name: "John",
-                    email: "john@gmail.com"
-                }
-            ];
+        students: async () => {
+
+            return await getAllStudents();
+
         },
-        getSingleUser: (_, args) => {
-            console.log('args: ', args)
-            return {
-                id: 2,
-                name: "manoj"
-            };
+        getSingleUser: async(_, args) => {
+            
+            return await getSingleStudent(args)
         },
         searchStudent: (_, args) => {
-            console.log('args: ', args)
+            
             return {
                 id: 2,
                 name: "manoj"
@@ -29,15 +22,14 @@ const StudentResolvers = {
     },
 
     Mutation: {
-        createStudent: (_, args) => {
-            createStudentController(args)
-
+        createStudent: async (_, { input }) => {
+            return await createStudentController(input);
         },
         updateStudent: (_, args) => {
-            console.log("args", args)
+            
         },
         DeleteStudent: (_, args) => {
-            console.log("args", args)
+            
         }
     }
 };
