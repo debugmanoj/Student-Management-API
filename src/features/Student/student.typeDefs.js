@@ -25,6 +25,7 @@ type Query {
     students: [Student]
     getSingleUser(id:ID!):Student
     searchStudent(name:String!):[Student]
+    studentsByDepartment(department:String!):[Student]
 }
 
 type Mutation {

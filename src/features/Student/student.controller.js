@@ -48,10 +48,26 @@ const searchStudentController = async ({ name }) => {
   }
 };
 
+const studentsByDepartmentController = async ({ department }) => {
+  try {
+    const result = await Student.find({
+      department: {
+        $regex: department,
+        $options: "i"
+      }
+    });
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export {
   createStudentController,
   getAllStudentsController,
   getSingleStudentController,
-  searchStudentController
+  searchStudentController,
+  studentsByDepartmentController
 }
