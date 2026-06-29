@@ -1,5 +1,12 @@
 import Student from "./student.model.js";
-import { createStudentController, getAllStudentsController, getSingleStudentController, searchStudentController,studentsByDepartmentController } from "./student.controller.js"
+import {
+    createStudentController,
+    getAllStudentsController,
+    getSingleStudentController,
+    searchStudentController,
+    studentsByDepartmentController,
+    topStudentsController
+} from "./student.controller.js"
 
 const StudentResolvers = {
     Query: {
@@ -16,8 +23,13 @@ const StudentResolvers = {
             return await searchStudentController(args)
 
         },
-        studentsByDepartment: async (_,args) => {
+        studentsByDepartment: async (_, args) => {
             return await studentsByDepartmentController(args)
+
+        },
+
+        topStudents: async (_, args) => {
+            return await topStudentsController(args)
 
         }
     },

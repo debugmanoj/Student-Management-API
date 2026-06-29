@@ -26,6 +26,7 @@ type Query {
     getSingleUser(id:ID!):Student
     searchStudent(name:String!):[Student]
     studentsByDepartment(department:String!):[Student]
+     topStudents(cgpa:Float!):[Student]
 }
 
 type Mutation {

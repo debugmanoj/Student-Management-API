@@ -63,11 +63,24 @@ const studentsByDepartmentController = async ({ department }) => {
   }
 };
 
+const topStudentsController = async () => {
+  try {
+    const result = await Student.find({
+      cgpa: { $gt: 8 }
+    });
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export {
   createStudentController,
   getAllStudentsController,
   getSingleStudentController,
   searchStudentController,
-  studentsByDepartmentController
+  studentsByDepartmentController,
+  topStudentsController
 }
