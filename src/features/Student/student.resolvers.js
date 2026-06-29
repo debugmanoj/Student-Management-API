@@ -1,23 +1,21 @@
 import Student from "./student.model.js";
-import { createStudentController,getAllStudents,getSingleStudent } from "./student.controller.js"
+import { createStudentController, getAllStudentsController, getSingleStudentController, searchStudentController } from "./student.controller.js"
 
 const StudentResolvers = {
     Query: {
         students: async () => {
 
-            return await getAllStudents();
+            return await getAllStudentsController();
 
         },
-        getSingleUser: async(_, args) => {
-            
-            return await getSingleStudent(args)
+        getSingleUser: async (_, args) => {
+
+            return await getSingleStudentController(args)
         },
-        searchStudent: (_, args) => {
-            
-            return {
-                id: 2,
-                name: "manoj"
-            };
+        searchStudent: async (_, args) => {
+            let a = await searchStudentController(args)
+            console.log('a: ', a)
+            return a
         }
     },
 
@@ -26,10 +24,10 @@ const StudentResolvers = {
             return await createStudentController(input);
         },
         updateStudent: (_, args) => {
-            
+
         },
         DeleteStudent: (_, args) => {
-            
+
         }
     }
 };

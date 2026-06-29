@@ -24,7 +24,7 @@ input CreateStudentInput {
 type Query {
     students: [Student]
     getSingleUser(id:ID!):Student
-    searchStudent(name:String!):Student
+    searchStudent(name:String!):[Student]
 }
 
 type Mutation {
