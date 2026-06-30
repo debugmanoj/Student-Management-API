@@ -99,6 +99,22 @@ const updateStudentController = async ({ id, input }) => {
 };
 
 
+const deleteStudentController = async ({ id }) => {
+  console.log('id: ', id)
+  try {
+    const student = await Student.findByIdAndDelete(id);
+
+    if (!student) {
+      throw new Error("Student not found");
+    }
+
+    return student; // Returns the deleted document
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export {
   createStudentController,
   getAllStudentsController,
@@ -106,5 +122,6 @@ export {
   searchStudentController,
   studentsByDepartmentController,
   topStudentsController,
-  updateStudentController
+  updateStudentController,
+  deleteStudentController
 }

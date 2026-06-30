@@ -6,7 +6,8 @@ import {
     searchStudentController,
     studentsByDepartmentController,
     topStudentsController,
-    updateStudentController
+    updateStudentController,
+    deleteStudentController
 } from "./student.controller.js"
 
 const StudentResolvers = {
@@ -41,10 +42,9 @@ const StudentResolvers = {
         },
         updateStudent: async(_, args) => {
             return await updateStudentController(args)
-
         },
-        DeleteStudent: (_, args) => {
-
+        DeleteStudent: async(_, args) => {
+            return await deleteStudentController(args)
         }
     }
 };
