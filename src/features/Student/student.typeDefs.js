@@ -20,7 +20,16 @@ input CreateStudentInput {
   year: String!
   cgpa: Float!
 }
-
+  
+input UpdateStudentInput {
+  name: String
+  email: String
+  age: Int
+  course: String
+  department: String
+  year: String
+  cgpa: Float
+}
 type Query {
     students: [Student]
     getSingleUser(id:ID!):Student
@@ -33,7 +42,7 @@ type Mutation {
     
 createStudent(input:CreateStudentInput!): Student
 
-updateStudent(id: ID!, name: String, email: String, age: String, course: String, department: String, year: String, cgpa: String): Student
+updateStudent(id:ID!,input:UpdateStudentInput!): Student
 
 DeleteStudent(id: ID!): Student
 

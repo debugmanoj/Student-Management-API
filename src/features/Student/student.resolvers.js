@@ -5,7 +5,8 @@ import {
     getSingleStudentController,
     searchStudentController,
     studentsByDepartmentController,
-    topStudentsController
+    topStudentsController,
+    updateStudentController
 } from "./student.controller.js"
 
 const StudentResolvers = {
@@ -38,7 +39,8 @@ const StudentResolvers = {
         createStudent: async (_, { input }) => {
             return await createStudentController(input);
         },
-        updateStudent: (_, args) => {
+        updateStudent: async(_, args) => {
+            return await updateStudentController(args)
 
         },
         DeleteStudent: (_, args) => {

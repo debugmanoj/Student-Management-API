@@ -76,11 +76,35 @@ const topStudentsController = async () => {
 };
 
 
+const updateStudentController = async ({ id, input }) => {
+  try {
+    const student = await Student.findByIdAndUpdate(
+      id,
+      { $set: input },
+      {
+        new: true, // Return updated document
+        runValidators: true, // Run schema validators
+      }
+    );
+
+    if (!student) {
+      throw new Error("Student not found");
+    }
+
+    return student
+
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 export {
   createStudentController,
   getAllStudentsController,
   getSingleStudentController,
   searchStudentController,
   studentsByDepartmentController,
-  topStudentsController
+  topStudentsController,
+  updateStudentController
 }
