@@ -1,13 +1,22 @@
 import Student from "./student.model.js";
+import { createStudentSchema,updateStudentSchema } from "./student.validation.js";
 
 const createStudentController = async (data) => {
   try {
 
+    const result = createStudentSchema.safeParse(data);
+    if (!result.success) {
+      throw new Error(
+        result.error.issues.map((err) => err.message).join(", ")
+      );
+    }
 
-    let result = await Student.create(data)
+    const student = await Student.create(result.data);
+
+    return student;
 
   } catch (error) {
-    return error
+    throw error
   }
 
 }
@@ -78,12 +87,23 @@ const topStudentsController = async () => {
 
 const updateStudentController = async ({ id, input }) => {
   try {
+    const result = updateStudentSchema.safeParse(input);
+    
+
+    if (!result.success) {
+      throw new Error(
+        result.error.issues.map((err) => err.message).join(", ")
+      );
+    }
+
     const student = await Student.findByIdAndUpdate(
       id,
-      { $set: input },
       {
-        new: true, // Return updated document
-        runValidators: true, // Run schema validators
+        $set: result.data,
+      },
+      {
+        new: true,
+        runValidators: true,
       }
     );
 
@@ -91,8 +111,7 @@ const updateStudentController = async ({ id, input }) => {
       throw new Error("Student not found");
     }
 
-    return student
-
+    return student;
   } catch (error) {
     throw error;
   }
@@ -100,7 +119,7 @@ const updateStudentController = async ({ id, input }) => {
 
 
 const deleteStudentController = async ({ id }) => {
-  console.log('id: ', id)
+  
   try {
     const student = await Student.findByIdAndDelete(id);
 
