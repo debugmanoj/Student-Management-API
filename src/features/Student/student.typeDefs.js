@@ -11,6 +11,8 @@ type Student {
     cgpa:Float!
 }
 
+union StudentResponse = Student | ValidationError | BadRequestError | NotFoundError | InternalServerError
+
 input CreateStudentInput {
   name: String!
   email: String!
@@ -30,21 +32,22 @@ input UpdateStudentInput {
   year: String
   cgpa: Float
 }
+
 type Query {
     students: [Student]
-    getSingleUser(id:ID!):Student
+    getSingleUser(id:ID!):StudentResponse
     searchStudent(name:String!):[Student]
     studentsByDepartment(department:String!):[Student]
-     topStudents(cgpa:Float!):[Student]
+    topStudents(cgpa:Float!):[Student]
 }
 
 type Mutation {
     
-createStudent(input:CreateStudentInput!): Student
+createStudent(input:CreateStudentInput!): StudentResponse
 
-updateStudent(id:ID!,input:UpdateStudentInput!): Student
+updateStudent(id:ID!,input:UpdateStudentInput!): StudentResponse
 
-DeleteStudent(id: ID!): Student
+DeleteStudent(id: ID!): StudentResponse
 
 
 

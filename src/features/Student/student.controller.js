@@ -1,12 +1,13 @@
 import Student from "./student.model.js";
 import { createStudentSchema,updateStudentSchema } from "./student.validation.js";
+import { createValidationError, createNotFoundError, createInternalServerError } from "../../shared/errors/GraphQLErrors.js";
 
 const createStudentController = async (data) => {
   try {
 
     const result = createStudentSchema.safeParse(data);
     if (!result.success) {
-      throw new Error(
+      return createValidationError(
         result.error.issues.map((err) => err.message).join(", ")
       );
     }
@@ -16,7 +17,7 @@ const createStudentController = async (data) => {
     return student;
 
   } catch (error) {
-    throw error
+    return createInternalServerError("An unexpected error occurred while creating the student.");
   }
 
 }
@@ -38,9 +39,13 @@ const getSingleStudentController = async ({ id }) => {
     const result = await Student.findOne({ _id: id });
 
 
+    if (!result) {
+      return createNotFoundError("Student not found");
+    }
+
     return result;
   } catch (error) {
-    throw error;
+    return createInternalServerError("An unexpected error occurred while fetching the student.");
   }
 };
 
@@ -91,7 +96,7 @@ const updateStudentController = async ({ id, input }) => {
     
 
     if (!result.success) {
-      throw new Error(
+      return createValidationError(
         result.error.issues.map((err) => err.message).join(", ")
       );
     }
@@ -108,12 +113,12 @@ const updateStudentController = async ({ id, input }) => {
     );
 
     if (!student) {
-      throw new Error("Student not found");
+      return createNotFoundError("Student not found");
     }
 
     return student;
   } catch (error) {
-    throw error;
+    return createInternalServerError("An unexpected error occurred while updating the student.");
   }
 };
 
@@ -124,12 +129,12 @@ const deleteStudentController = async ({ id }) => {
     const student = await Student.findByIdAndDelete(id);
 
     if (!student) {
-      throw new Error("Student not found");
+      return createNotFoundError("Student not found");
     }
 
     return student; // Returns the deleted document
   } catch (error) {
-    throw error;
+    return createInternalServerError("An unexpected error occurred while deleting the student.");
   }
 };
 

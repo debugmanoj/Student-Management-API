@@ -11,6 +11,17 @@ import {
 } from "./student.controller.js"
 
 const StudentResolvers = {
+    StudentResponse: {
+        __resolveType(obj) {
+            if (obj.__typename) {
+                return obj.__typename;
+            }
+            if (obj.email || obj.id || obj._id) {
+                return 'Student';
+            }
+            return null;
+        }
+    },
     Query: {
         students: async () => {
 
